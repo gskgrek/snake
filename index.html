@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Snake</title>
+
+    <meta name="theme-color" content="#000000">
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+	<div id="app">
+
+		<header>
+			<div>LEVEL: <span id="level">1</span></div>
+			<h1>SNAKE</h1>
+			<div>SCORE: <span id="score">0</span></div>
+		</header>
+
+		<div class="game">
+
+			<canvas id="canvas" width="500" height="500"></canvas>
+
+			<div id="menu" class="screen">
+				<div class="title">SNAKE</div>
+				<div class="options">
+					<button id="btn-new" type="button">[N] NEW GAME</button>
+					<button id="btn-options" type="button">[O] OPIONS</button>
+				</div>
+			</div>
+
+			<div id="options" class="screen">
+				<div class="title">SNAKE</div>
+				<div class="options">
+					<button id="btn-level" type="button">[L] LEVEL: <span id="options-level">1</span></button>
+					<button id="btn-power-time" type="button">[P] POWER TIME: <span id="options-power-time">10</span>s</button>
+					<button id="btn-power-freq" type="button">[F] POWER FREQ: <span id="options-power-freq">5</span></button>
+					<button id="btn-game-speed" type="button">[S] GAME SPEED: <span id="options-power-freq">1</span></button>
+				</div>
+			</div>
+
+		</div>
+
+		<footer>
+			<button id="btn-menu" type="button">[M] MENU</button>
+			<div>System FPS: <span id="fps">0</span> Game FPS: <span id="game-fps">0</span></div>
+		</footer>
+
+	</div>
+
+	<script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
