@@ -29,6 +29,14 @@ let Apple = function(ctx, $canvas, power, value){
     };
 
     /**
+     * Initialize apple
+     */
+    let init = () => {
+        _value = 5;
+        _power = 'apple';
+    };
+
+    /**
      * Draw apple on $canvas
      */
     let draw = () => {
