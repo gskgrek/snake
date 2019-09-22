@@ -103,6 +103,10 @@ footer{
     text-align: center;
     font-size: 6rem;
 }
+.screen .subtitle{
+    text-align: center;
+    font-size: 2rem;
+}
 .screen .options{
     display: flex;
     flex-direction: column;
@@ -128,6 +132,14 @@ footer{
 
 #end .score{
     margin: 16px 0;
+}
+
+#scoreboard .list{
+    display: block;
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 2.2rem;
 }
 
 canvas{
