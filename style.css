@@ -30,6 +30,15 @@ body{
     color: #000000;
 }
 
+a, a:visited{
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease-in-out;
+}
+a:hover{
+    color: #666666;
+}
+
 button{
     background: none;
     border: none;
