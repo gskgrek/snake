@@ -6,28 +6,28 @@
  * @constructor
  */
 let Snake = function(ctx, $canvas){
-    let size = 25; // snake segment size
-    let speed = 1000; // movement speed in miliseconds per segment
-    let segments = []; // holds segments positions
-    let dir = 'right'; // movement direction
-    let initial_length = 4; // starting number of segments
-    let step_delta_time = 0;
-    let maxX = Math.floor($canvas.width / size ) - 1;
-    let maxY = Math.floor($canvas.height / size ) - 1;
+    let _size = 25; // snake segment size
+    let _speed = 1000; // movement speed in miliseconds per segment
+    let _segments = []; // holds segments positions
+    let _direction = 'right'; // movement direction
+    let _initial_length = 4; // starting number of segments
+    let _step_delta_time = 0;
+    let _maxX = Math.floor($canvas.width / _size ) - 1;
+    let _maxY = Math.floor($canvas.height / _size ) - 1;
 
-    let segments_to_grow = 0;
+    let _segments_to_grow = 0;
 
     /**
      * Initialize snake and draw it initial state on $canvas
      * Head will be at last array position
      */
     let init = () => {
-        segments = [];
-        dir = 'right';
-        let startX = (maxX >> 1) - (initial_length >> 1); // middle of canvas - half of initial length
-        let startY = (maxY >> 1);
-        for( let i=0; i<initial_length; i++ ){
-            segments.push( { x: startX + i, y: startY } );
+        _segments = [];
+        _direction = 'right';
+        let startX = (_maxX >> 1) - (_initial_length >> 1); // middle of canvas - half of initial length
+        let startY = (_maxY >> 1);
+        for( let i=0; i<_initial_length; i++ ){
+            _segments.push( { x: startX + i, y: startY } );
         }
     };
 
@@ -37,62 +37,62 @@ let Snake = function(ctx, $canvas){
      * @param time_step integer Time since last game render step in milliseconds
      */
     let step = (time_step) => {
-        step_delta_time += time_step;
-        if( step_delta_time >= speed ){
+        _step_delta_time += time_step;
+        if( _step_delta_time >= _speed ){
             // save head position to move 2nd segment to it
-            let prevX = segments[segments.length-1].x;
-            let prevY = segments[segments.length-1].y;
+            let prevX = _segments[_segments.length-1].x;
+            let prevY = _segments[_segments.length-1].y;
             // temporary cache current segment position
             let tmpX = 0;
             let tmpY = 0;
 
             // move head
-            switch(dir){
+            switch(_direction){
                 case "right":
-                    tmpX = segments[segments.length-1].x + 1;
-                    if( tmpX > maxX ){
+                    tmpX = _segments[_segments.length-1].x + 1;
+                    if( tmpX > _maxX ){
                         tmpX = 0;
                     }
-                    segments[segments.length-1].x = tmpX;
+                    _segments[_segments.length-1].x = tmpX;
                     break;
                 case "down":
-                    tmpY = segments[segments.length-1].y + 1;
-                    if( tmpY > maxY ){
+                    tmpY = _segments[_segments.length-1].y + 1;
+                    if( tmpY > _maxY ){
                         tmpY = 0;
                     }
-                    segments[segments.length-1].y = tmpY;
+                    _segments[_segments.length-1].y = tmpY;
                     break;
                 case "left":
-                    tmpX = segments[segments.length-1].x - 1;
+                    tmpX = _segments[_segments.length-1].x - 1;
                     if( tmpX < 0 ){
-                        tmpX = maxX;
+                        tmpX = _maxX;
                     }
-                    segments[segments.length-1].x = tmpX;
+                    _segments[_segments.length-1].x = tmpX;
                     break;
                 case "up":
-                    tmpY = segments[segments.length-1].y - 1;
+                    tmpY = _segments[_segments.length-1].y - 1;
                     if( tmpY < 0 ){
-                        tmpY = maxY;
+                        tmpY = _maxY;
                     }
-                    segments[segments.length-1].y = tmpY;
+                    _segments[_segments.length-1].y = tmpY;
                     break;
             }
 
             // move other segments to previous segment position
-            for(let i = segments.length-2; i>=0;i--) {
-                tmpX = segments[i].x;
-                tmpY = segments[i].y;
-                segments[i].x = prevX;
-                segments[i].y = prevY;
+            for(let i = _segments.length-2; i>=0;i--) {
+                tmpX = _segments[i].x;
+                tmpY = _segments[i].y;
+                _segments[i].x = prevX;
+                _segments[i].y = prevY;
                 prevX = tmpX;
                 prevY = tmpY;
             }
 
-            step_delta_time = 0;
+            _step_delta_time = 0;
 
             // if we have left some segments to add lets grow
-            if( segments_to_grow > 0 ){
-                grow(segments_to_grow);
+            if( _segments_to_grow > 0 ){
+                grow(_segments_to_grow);
             }
         }
     };
@@ -114,7 +114,7 @@ let Snake = function(ctx, $canvas){
         }
 
         // get snake head point (other blocks move after head so onli this block takes new coordinates)
-        let head = segments[segments.length - 1];
+        let head = _segments[_segments.length - 1];
         for( let i=0; i<test_blocks.length; i++ ){
             if( head.x === test_blocks[i].x && head.y === test_blocks[i].y ){
                 return true;
@@ -131,10 +131,10 @@ let Snake = function(ctx, $canvas){
      */
     let grow = (count) => {
         // set new segment outside canvas. It will get position of last snake segment on next step
-        segments.unshift({x: -1, y: -1});
+        _segments.unshift({x: -1, y: -1});
         // if snake has to grow more than 1 segment, save its number for next calculations step
         if( count > 0 ){
-            segments_to_grow = count - 1;
+            _segments_to_grow = count - 1;
         }
     };
 
@@ -145,12 +145,12 @@ let Snake = function(ctx, $canvas){
      */
     let turn = (direction) => {
         if (
-            (direction === 'right' && dir !== 'left') ||
-            (direction === 'left' && dir !== 'right') ||
-            (direction === 'up' && dir !== 'down') ||
-            (direction === 'down' && dir !== 'up')
+            (direction === 'right' && _direction !== 'left') ||
+            (direction === 'left' && _direction !== 'right') ||
+            (direction === 'up' && _direction !== 'down') ||
+            (direction === 'down' && _direction !== 'up')
         ) {
-            dir = direction;
+            _direction = direction;
         }
     };
 
@@ -159,19 +159,19 @@ let Snake = function(ctx, $canvas){
      */
     let draw = () => {
         ctx.fillStyle = "rgba(0, 0, 0, 1)";
-        for( let i=0; i<segments.length; i++ ){
-            ctx.fillRect(segments[i].x * size + 1, segments[i].y * size + 1, size - 2, size - 2);
+        for( let i=0; i<_segments.length; i++ ){
+            ctx.fillRect(_segments[i].x * _size + 1, _segments[i].y * _size + 1, _size - 2, _size - 2);
         }
     };
 
     // GETTERS
     let getSpeed = () => {
-        return speed;
+        return _speed;
     };
 
     // SETTERS
-    let setSpeed = (new_speed) => {
-        speed = new_speed;
+    let setSpeed = (speed) => {
+        _speed = speed;
     };
 
     return {
