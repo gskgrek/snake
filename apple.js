@@ -3,13 +3,21 @@
  *
  * @param ctx
  * @param $canvas
+ * @param power string Apple power:
+ *         apple - default; add 'value' points to score;
+ *         short - remove 'value' number of segments from snake;
+ *         long - add 'value' number of segments to snake;
+ *         fast - speed up snake for 'value' number of seconds;
+ *         slow - slow down snake for 'value' number of seconds;
+ *         ghost - make obstacles transparent for snake for 'value' number of seconds
+ * @param value integer Apple power value
  * @constructor
  */
-let Apple = function(ctx, $canvas, power){
+let Apple = function(ctx, $canvas, power, value){
     let size = 25; // apple size in pixels
     let x = 0; // position on game board
     let y = 0;
-    let value = 5; // value of apple in points
+    let _value = typeof value === 'number' ? value : 5; // value of apple in points
     let _power = typeof power === 'string' ? power : 'apple'; // apple can also have some type of powers
 
     /**
@@ -37,11 +45,16 @@ let Apple = function(ctx, $canvas, power){
         return value;
     };
 
+    let getPower = () => {
+        return _power;
+    };
+
     return {
         getPos: getPos,
         getValue: getValue,
         randomPosition: randomPosition,
         draw: draw,
+        getPower: getPower,
     }
 
 };
