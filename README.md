@@ -7,10 +7,7 @@ Use keyboard to navigate:
 `M` or `Escape` - Return to main menu  
 `N` - New game  
 `O` - Options menu  
-`L` - Change game level  
-`P` - Change powerup working time  
-`F` - Change number of apples snake need to eat between powerups apperance  
-`S` - Change game speed  
+`WSAD` - movement
 
 ## Supported browser!
 - Chrome
