@@ -1,3 +1,31 @@
+let powers = [
+    {
+        power: 'short',
+        value: 2
+    },
+    {
+        power: 'long',
+        value: 2
+    },
+    {
+        power: 'fast',
+        value: 10
+    },
+    {
+        power: 'slow',
+        value: 10
+    },
+    {
+        power: 'multiply',
+        value: 2
+    },
+    {
+        power: 'ghost',
+        value: 10
+    }
+];
+
+
 /**
  * Apple object
  *
@@ -9,6 +37,7 @@
  *         long - add 'value' number of segments to snake;
  *         fast - speed up snake for 'value' number of seconds;
  *         slow - slow down snake for 'value' number of seconds;
+ *         multiply - multiply current apple points by 'value'
  *         ghost - make obstacles transparent for snake for 'value' number of seconds
  * @param value integer Apple power value
  * @constructor
@@ -19,6 +48,7 @@ let Apple = function(ctx, $canvas, power, value){
     let _y = 0;
     let _value = typeof value === 'number' ? value : 5; // value of apple in points
     let _power = typeof power === 'string' ? power : 'apple'; // apple can also have some type of powers
+    let _powers = powers.splice(0);
 
     /**
      * Set start random position
@@ -59,10 +89,10 @@ let Apple = function(ctx, $canvas, power, value){
 
     return {
         init: init,
+        draw: draw,
+        randomPosition: randomPosition,
         getPos: getPos,
         getValue: getValue,
-        randomPosition: randomPosition,
-        draw: draw,
         getPower: getPower,
     }
 

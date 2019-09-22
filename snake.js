@@ -8,9 +8,11 @@
 let Snake = function(ctx, $canvas){
     let _size = 25; // snake segment size
     let _speed = 1000; // movement speed in miliseconds per segment
+    let _min_speed = 250; // snake minimum speed value
+    let _max_speed = 1750; // snake maximum speed value
     let _segments = []; // holds segments positions
     let _direction = 'right'; // movement direction
-    let _initial_length = 4; // starting number of segments
+    let _initial_length = 2; // starting number of segments
     let _step_delta_time = 0;
     let _maxX = Math.floor($canvas.width / _size ) - 1;
     let _maxY = Math.floor($canvas.height / _size ) - 1;
@@ -160,13 +162,30 @@ let Snake = function(ctx, $canvas){
     let draw = () => {
         ctx.fillStyle = "rgba(0, 0, 0, 1)";
         for( let i=0; i<_segments.length; i++ ){
-            ctx.fillRect(_segments[i].x * _size + 1, _segments[i].y * _size + 1, _size - 2, _size - 2);
+            if( i < _segments.length - 1 ) {
+                ctx.fillRect(_segments[i].x * _size + 3, _segments[i].y * _size + 3, _size - 6, _size - 6); // draw body segments smaller than head
+            }else{
+                ctx.fillRect(_segments[i].x * _size + 1, _segments[i].y * _size + 1, _size - 2, _size - 2);
+            }
         }
     };
 
     // GETTERS
     let getSpeed = () => {
         return _speed;
+    };
+
+    let getMinSpeed = () => {
+        return _min_speed;
+    };
+
+    let getMaxSpeed = () => {
+        return _max_speed;
+    };
+
+    let getSpeedScoreMultiplier = () => {
+        let mid_speed = ((_max_speed - _min_speed) >> 1) + _min_speed;
+        return Math.round(mid_speed / _min_speed );
     };
 
     let getSegments = (remove_head) => {
@@ -183,7 +202,13 @@ let Snake = function(ctx, $canvas){
 
     // SETTERS
     let setSpeed = (speed) => {
-        _speed = speed;
+        if( speed > _max_speed ) {
+            _speed = _max_speed;
+        }else if( speed < _min_speed ) {
+            _speed = _min_speed;
+        }else{
+            _speed = speed;
+        }
     };
 
     return {
@@ -195,6 +220,9 @@ let Snake = function(ctx, $canvas){
         collides: collides,
         getSpeed: getSpeed,
         getSegments: getSegments,
+        getMinSpeed: getMinSpeed,
+        getMaxSpeed: getMaxSpeed,
+        getSpeedScoreMultiplier: getSpeedScoreMultiplier,
         setSpeed: setSpeed,
     }
 
