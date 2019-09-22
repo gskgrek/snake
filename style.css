@@ -126,6 +126,10 @@ footer{
     animation: pulse 2s linear 0s infinite normal;
 }
 
+#end .score{
+    margin: 16px 0;
+}
+
 canvas{
     border: 1px solid rgba(0, 0, 0, 0.5);
 }

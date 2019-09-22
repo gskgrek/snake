@@ -169,6 +169,18 @@ let Snake = function(ctx, $canvas){
         return _speed;
     };
 
+    let getSegments = (remove_head) => {
+        let _remove_head = typeof remove_head === 'undefined' ? false : remove_head;
+
+        if( _remove_head ){
+            let new_segments = _segments.slice(0);
+            new_segments.pop();
+            return new_segments;
+        }else {
+            return _segments;
+        }
+    };
+
     // SETTERS
     let setSpeed = (speed) => {
         _speed = speed;
@@ -182,6 +194,7 @@ let Snake = function(ctx, $canvas){
         grow: grow,
         collides: collides,
         getSpeed: getSpeed,
+        getSegments: getSegments,
         setSpeed: setSpeed,
     }
 
