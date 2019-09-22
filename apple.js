@@ -58,6 +58,7 @@ let Apple = function(ctx, $canvas, power, value){
     };
 
     return {
+        init: init,
         getPos: getPos,
         getValue: getValue,
         randomPosition: randomPosition,
