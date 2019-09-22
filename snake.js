@@ -12,6 +12,8 @@ let Snake = function(ctx, $canvas){
     let dir = 'right'; // movement direction
     let initial_length = 4; // starting number of segments
     let step_delta_time = 0;
+    let maxX = Math.floor($canvas.width / size ) - 1;
+    let maxY = Math.floor($canvas.height / size ) - 1;
 
     let segments_to_grow = 0;
 
@@ -22,9 +24,8 @@ let Snake = function(ctx, $canvas){
     let init = () => {
         segments = [];
         dir = 'right';
-
-        let startX = Math.floor( ($canvas.width >> 1) / size ) - (initial_length >> 1); // middle of canvas - half of initial length
-        let startY = Math.floor( ($canvas.height >> 1) / size );
+        let startX = (maxX >> 1) - (initial_length >> 1); // middle of canvas - half of initial length
+        let startY = (maxY >> 1);
         for( let i=0; i<initial_length; i++ ){
             segments.push( { x: startX + i, y: startY } );
         }
@@ -48,16 +49,32 @@ let Snake = function(ctx, $canvas){
             // move head
             switch(dir){
                 case "right":
-                    segments[segments.length-1].x++;
+                    tmpX = segments[segments.length-1].x + 1;
+                    if( tmpX > maxX ){
+                        tmpX = 0;
+                    }
+                    segments[segments.length-1].x = tmpX;
                     break;
                 case "down":
-                    segments[segments.length-1].y++;
+                    tmpY = segments[segments.length-1].y + 1;
+                    if( tmpY > maxY ){
+                        tmpY = 0;
+                    }
+                    segments[segments.length-1].y = tmpY;
                     break;
                 case "left":
-                    segments[segments.length-1].x--;
+                    tmpX = segments[segments.length-1].x - 1;
+                    if( tmpX < 0 ){
+                        tmpX = maxX;
+                    }
+                    segments[segments.length-1].x = tmpX;
                     break;
                 case "up":
-                    segments[segments.length-1].y--;
+                    tmpY = segments[segments.length-1].y - 1;
+                    if( tmpY < 0 ){
+                        tmpY = maxY;
+                    }
+                    segments[segments.length-1].y = tmpY;
                     break;
             }
 

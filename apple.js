@@ -24,7 +24,6 @@ let Apple = function(ctx, $canvas, power){
      * Draw apple on $canvas
      */
     let draw = () => {
-        console.log(_power);
         ctx.fillStyle = "rgba(0, 176, 0, 1)";
         ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
     };
