@@ -42,7 +42,7 @@ let Apple = function(ctx, $canvas, power, value){
     };
 
     let getValue = () => {
-        return value;
+        return _value;
     };
 
     let getPower = () => {
