@@ -142,6 +142,46 @@ footer{
     font-size: 2.2rem;
 }
 
+#instructions .list{
+    display: block;
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 2.2rem;
+}
+#instructions .list li{
+    margin: 5px 0;
+}
+
+#instructions .power{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    vertical-align: middle;
+}
+#instructions .power.power--apple{
+    background: rgba(0, 176, 0, 1);
+}
+#instructions .power.power--short{
+    background: rgba(0, 255, 0, 1);
+}
+#instructions .power.power--long{
+    background: rgba(255, 0, 0, 1);
+}
+#instructions .power.power--fast{
+    background: rgba(255, 255, 0, 1);
+}
+#instructions .power.power--slow{
+    background: rgba(0, 255, 255, 1);
+}
+#instructions .power.power--multiply{
+    background: rgba(0, 0, 255, 1);
+}
+#instructions .power.power--ghost{
+    background: rgba(255, 0, 255, 1);
+}
+
 canvas{
     border: 1px solid rgba(0, 0, 0, 0.5);
 }
