@@ -48,7 +48,7 @@ let Level = function(ctx, $canvas){
     let _size = 25; // block size in pixels
     let _segments = []; // holds segments positions
     let _level = 1; // current level num
-    let _max_level = 5;
+    let _max_level = 2;
     let _multiplier = 1; // current level points multiplier
 
     /**

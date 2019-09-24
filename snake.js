@@ -19,6 +19,10 @@ let Snake = function(ctx, $canvas){
 
     let _segments_to_grow = 0;
 
+    let _speed_multiplier = 1;
+    let _speed_time = 0;
+    let _is_ghost = false;
+
     /**
      * Initialize snake and draw it initial state on $canvas
      * Head will be at last array position
@@ -31,6 +35,7 @@ let Snake = function(ctx, $canvas){
         for( let i=0; i<_initial_length; i++ ){
             _segments.push( { x: startX + i, y: startY } );
         }
+        resetPowers();
     };
 
     /**
@@ -40,7 +45,7 @@ let Snake = function(ctx, $canvas){
      */
     let step = (time_step) => {
         _step_delta_time += time_step;
-        if( _step_delta_time >= _speed ){
+        if( _step_delta_time >= _speed * _speed_multiplier ){
             // save head position to move 2nd segment to it
             let prevX = _segments[_segments.length-1].x;
             let prevY = _segments[_segments.length-1].y;
@@ -97,6 +102,14 @@ let Snake = function(ctx, $canvas){
                 grow(_segments_to_grow);
             }
         }
+
+        if( _speed_time > 0 ){
+            _speed_time -= time_step;
+            if( _speed_time <= 0 ){
+                resetPowers();
+            }
+        }
+
     };
 
     /**
@@ -132,11 +145,19 @@ let Snake = function(ctx, $canvas){
      * @param count integer Amount of segments to grow up
      */
     let grow = (count) => {
-        // set new segment outside canvas. It will get position of last snake segment on next step
-        _segments.unshift({x: -1, y: -1});
-        // if snake has to grow more than 1 segment, save its number for next calculations step
-        if( count > 0 ){
-            _segments_to_grow = count - 1;
+        if( count < 0 ){
+            count = Math.abs(count);
+            if( count > _segments.length - 1 ){
+                count = _segments.length - 1;
+            }
+            _segments.splice(0, count);
+        }else if( count > 0 ) {
+            // set new segment outside canvas. It will get position of last snake segment on next step
+            _segments.unshift({x: -1, y: -1});
+            // if snake has to grow more than 1 segment, save its number for next calculations step
+            if (count > 0) {
+                _segments_to_grow = count - 1;
+            }
         }
     };
 
@@ -160,7 +181,11 @@ let Snake = function(ctx, $canvas){
      * Draw snake on $canvas
      */
     let draw = () => {
-        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        if( _is_ghost ) {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        }else{
+            ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        }
         for( let i=0; i<_segments.length; i++ ){
             if( i < _segments.length - 1 ) {
                 ctx.fillRect(_segments[i].x * _size + 3, _segments[i].y * _size + 3, _size - 6, _size - 6); // draw body segments smaller than head
@@ -168,6 +193,47 @@ let Snake = function(ctx, $canvas){
                 ctx.fillRect(_segments[i].x * _size + 1, _segments[i].y * _size + 1, _size - 2, _size - 2);
             }
         }
+    };
+
+    /**
+     * make snake move faster. Before that remove actual powers;
+     *
+     * @param time How long to speed up snake (in ms).
+     */
+    let speedUp = (time) => {
+        resetPowers();
+        _speed_multiplier = 0.5;
+        _speed_time = time;
+    };
+
+    /**
+     * make snake move slower. Before that remove actual powers;
+     *
+     * @param time How long to slow down snake (in ms).
+     */
+    let slowDown = (time) => {
+        resetPowers();
+        _speed_multiplier = 1.5;
+        _speed_time = time;
+    };
+
+    /**
+     * Make snake transparent
+     *
+     * @param time Time to end of transparency (in ms).
+     */
+    let makeGhost = (time) => {
+        resetPowers();
+        _is_ghost = true;
+    };
+
+    /**
+     * Remove all powers from snake
+     */
+    let resetPowers = () => {
+        _speed_time = 0;
+        _speed_multiplier = 1;
+        _is_ghost = false;
     };
 
     // GETTERS
@@ -200,6 +266,10 @@ let Snake = function(ctx, $canvas){
         }
     };
 
+    let isGhost = () => {
+        return _is_ghost;
+    };
+
     // SETTERS
     let setSpeed = (speed) => {
         if( speed > _max_speed ) {
@@ -218,6 +288,10 @@ let Snake = function(ctx, $canvas){
         turn: turn,
         grow: grow,
         collides: collides,
+        speedUp: speedUp,
+        slowDown: slowDown,
+        makeGhost: makeGhost,
+        isGhost: isGhost,
         getSpeed: getSpeed,
         getSegments: getSegments,
         getMinSpeed: getMinSpeed,

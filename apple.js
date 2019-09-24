@@ -1,27 +1,33 @@
 let powers = [
     {
-        power: 'short',
-        value: 2
+        name: 'short',
+        value: 2,
+        color: "rgba(0, 255, 0, 1)",
     },
     {
-        power: 'long',
-        value: 2
+        name: 'long',
+        value: 2,
+        color: "rgba(255, 0, 0, 1)",
     },
     {
-        power: 'fast',
-        value: 10
+        name: 'fast',
+        value: 10,
+        color: "rgba(255, 255, 0, 1)",
     },
     {
-        power: 'slow',
-        value: 10
+        name: 'slow',
+        value: 10,
+        color: "rgba(0, 255, 255, 1)",
     },
     {
-        power: 'multiply',
-        value: 2
+        name: 'multiply',
+        value: 2,
+        color: "rgba(0, 0, 255, 1)",
     },
     {
-        power: 'ghost',
-        value: 10
+        name: 'ghost',
+        value: 10,
+        color: "rgba(255, 0, 255, 1)",
     }
 ];
 
@@ -42,35 +48,47 @@ let powers = [
  * @param value integer Apple power value
  * @constructor
  */
-let Apple = function(ctx, $canvas, power, value){
+let Apple = function(ctx, $canvas){
+    let _default_power = 'apple';
+    let _default_value = 5;
+    let _default_color = "rgba(0, 176, 0, 1)";
+
     let _size = 25; // apple size in pixels
     let _x = 0; // position on game board
     let _y = 0;
-    let _value = typeof value === 'number' ? value : 5; // value of apple in points
-    let _power = typeof power === 'string' ? power : 'apple'; // apple can also have some type of powers
+    let _value = _default_value; // value of power
+    let _power = _default_power; // apple can also have some type of powers
+    let _color = _default_color;
     let _powers = powers.splice(0);
 
     /**
      * Set start random position
      */
-    let randomPosition = () => {
-        _x = Math.floor( Math.random() * ($canvas.width / _size) );
-        _y = Math.floor( Math.random() * ($canvas.height / _size) );
+    let randomPosition = (exclude=[]) => {
+        let nX = Math.floor( Math.random() * ($canvas.width / _size) );
+        let nY = Math.floor( Math.random() * ($canvas.height / _size) );
+
+        while( exclude.includes({x: nX, y: nY}) ){
+            nX = Math.floor( Math.random() * ($canvas.width / _size) );
+            nY = Math.floor( Math.random() * ($canvas.height / _size) );
+        }
+
+        _x = nX;
+        _y = nY;
     };
 
     /**
      * Initialize apple
      */
     let init = () => {
-        _value = 5;
-        _power = 'apple';
+
     };
 
     /**
      * Draw apple on $canvas
      */
     let draw = () => {
-        ctx.fillStyle = "rgba(0, 176, 0, 1)";
+        ctx.fillStyle = _color;
         ctx.fillRect(_x * _size + 1, _y * _size + 1, _size - 2, _size - 2);
     };
 
@@ -87,6 +105,31 @@ let Apple = function(ctx, $canvas, power, value){
         return _power;
     };
 
+    // SETTERS
+    let setPower = (power) => {
+        _power = power;
+        _powers.forEach( (item) => {
+            if( item.name === _power ){
+                _color = item.color;
+            }
+        });
+    };
+
+    let setValue = (value) => {
+        _value = value;
+    };
+
+    let setRandomPower = () => {
+        let power = _powers[ Math.floor( Math.random() * _powers.length ) ];
+        setPower( power.name );
+        setValue( power.value );
+    };
+
+    let setDefaultPower = () => {
+        setPower(_default_power);
+        setValue(_default_value);
+    };
+
     return {
         init: init,
         draw: draw,
@@ -94,6 +137,10 @@ let Apple = function(ctx, $canvas, power, value){
         getPos: getPos,
         getValue: getValue,
         getPower: getPower,
+        setPower: setPower,
+        setValue: setValue,
+        setRandomPower: setRandomPower,
+        setDefaultPower: setDefaultPower,
     }
 
 };
