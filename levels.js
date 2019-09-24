@@ -55,9 +55,7 @@ let Level = function(ctx, $canvas){
      * Initialize level
      */
     let init = () => {
-        _level = 1;
-        _segments = level1.segments.splice(0);
-        _multiplier = level1.multiplier;
+        setLevel(1);
     };
 
     /**
