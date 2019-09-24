@@ -16,6 +16,7 @@ let Snake = function(ctx, $canvas){
     let _step_delta_time = 0;
     let _maxX = Math.floor($canvas.width / _size ) - 1;
     let _maxY = Math.floor($canvas.height / _size ) - 1;
+    let _turn_on_tick = '';
 
     let _segments_to_grow = 0;
 
@@ -46,6 +47,13 @@ let Snake = function(ctx, $canvas){
     let step = (time_step) => {
         _step_delta_time += time_step;
         if( _step_delta_time >= _speed * _speed_multiplier ){
+
+            // check if we planned to change direction
+            if( _turn_on_tick !== '' ){
+                _direction = _turn_on_tick;
+                _turn_on_tick = '';
+            }
+
             // save head position to move 2nd segment to it
             let prevX = _segments[_segments.length-1].x;
             let prevY = _segments[_segments.length-1].y;
@@ -173,7 +181,7 @@ let Snake = function(ctx, $canvas){
             (direction === 'up' && _direction !== 'down') ||
             (direction === 'down' && _direction !== 'up')
         ) {
-            _direction = direction;
+            _turn_on_tick = direction;
         }
     };
 
