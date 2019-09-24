@@ -251,7 +251,7 @@ let Snake = function(ctx, $canvas){
 
     let getSpeedScoreMultiplier = () => {
         let mid_speed = ((_max_speed - _min_speed) >> 1) + _min_speed;
-        return Math.round(mid_speed / _min_speed );
+        return Math.round(mid_speed / _speed );
     };
 
     let getSegments = (remove_head) => {
