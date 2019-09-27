@@ -272,27 +272,27 @@ let Level = function(ctx, $canvas){
         _level = level;
         switch( _level ) {
             case 1:
-                _segments = level1.segments.splice(0);
+                _segments = [...level1.segments];
                 _multiplier = level1.multiplier;
                 break;
             case 2:
-                _segments = level2.segments.splice(0);
+                _segments = [...level2.segments];
                 _multiplier = level2.multiplier;
                 break;
             case 3:
-                _segments = level3.segments.splice(0);
+                _segments = [...level3.segments];
                 _multiplier = level3.multiplier;
                 break;
             case 4:
-                _segments = level4.segments.splice(0);
+                _segments = [...level4.segments];
                 _multiplier = level4.multiplier;
                 break;
             case 5:
-                _segments = level5.segments.splice(0);
+                _segments = [...level5.segments];
                 _multiplier = level5.multiplier;
                 break;
             default:
-                _segments = level1.segments.splice(0);
+                _segments = [...level1.segments];
                 _multiplier = level1.multiplier;
         }
     };
