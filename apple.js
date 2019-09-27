@@ -68,7 +68,7 @@ let Apple = function(ctx, $canvas){
         let nX = Math.floor( Math.random() * ($canvas.width / _size) );
         let nY = Math.floor( Math.random() * ($canvas.height / _size) );
 
-        while( exclude.includes({x: nX, y: nY}) ){
+        while( exclude.filter( (item) => (item.x === nX && item.y === nY) ).length > 0 ){
             nX = Math.floor( Math.random() * ($canvas.width / _size) );
             nY = Math.floor( Math.random() * ($canvas.height / _size) );
         }
